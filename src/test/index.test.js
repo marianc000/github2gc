@@ -7,10 +7,13 @@ describe("video streaming microservice", () => {
 
         const response = await request(app).get("/live"); // Makes a request to the "/live" route.
         expect(response.status).toBe(2002); // Verify that a HTTP status code 200 is returned, indicating success.
-        
-        await new Promise(resolve => server.close(() => {
-            console.log('HTTP server closed');
-            resolve();
-        }));
+
     });
+});
+
+afterAll(() => {
+    return new Promise(resolve => server.close(() => {
+        console.log('HTTP server closed');
+        resolve();
+    }));
 });
