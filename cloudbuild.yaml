@@ -1,0 +1,10 @@
+steps:
+- name: "gcr.io/cloud-builders/docker"
+  args:
+  - build
+  - "--tag=europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:tag1"
+  - "--file=./Dockerfile-prod"
+  - .
+  automapSubstitutions: true
+images:
+- "europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:tag1"
