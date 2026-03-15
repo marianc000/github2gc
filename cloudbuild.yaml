@@ -8,3 +8,5 @@ steps:
   automapSubstitutions: true
 images:
 - "europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:tag1"
+options:
+  logging: CLOUD_LOGGING_ONLY
