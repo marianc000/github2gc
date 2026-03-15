@@ -6,15 +6,37 @@ steps:
 - name: 'node:22'
   entrypoint: 'npm'
   args: ['test']
-  
+
+# Build the image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE/SERVICE_NAME:$COMMIT_SHA', '.']
+
 - name: "gcr.io/cloud-builders/docker"
   args:
   - build
-  - "--tag=europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:tag1"
+  - "--tag=europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
   - "--file=./Dockerfile-prod"
   - .
   automapSubstitutions: true
+
+# Push the image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA']
+
+# Deploy image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: 
+    - 'run'
+    - 'deploy'
+    - 'servicename'
+    - '--image'
+    - 'europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA'
+    - '--region'
+    - 'europe-west9'
+
 images:
-- "europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:tag1"
+- "europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
+
 options:
   logging: CLOUD_LOGGING_ONLY
