@@ -10,10 +10,7 @@ const app = express();
 if (!process.env.PORT) {
     throw new Error("Please specify the port number for the HTTP server with the environment variable PORT.");
 }
-
-//
-// Extracts the PORT environment variable.
-//
+ 
 const PORT = process.env.PORT;
  
 app.get("/video", async (req, res) => { // Route for streaming video.
