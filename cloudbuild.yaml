@@ -11,14 +11,14 @@ steps:
 - name: "gcr.io/cloud-builders/docker"
   args:
   - build
-  - "--tag=europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
+  - "--tag=$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
   - "--file=./Dockerfile-prod"
   - .
   automapSubstitutions: true
 
 # Push the image to Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA']
+  args: ['push', '$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA']
 
 # Deploy image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -28,12 +28,12 @@ steps:
     - 'deploy'
     - 'servicename'
     - '--image'
-    - 'europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA'
+    - '$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA'
     - '--region'
-    - 'europe-west9'
+    - '$LOCATION'
 
 images:
-- "europe-west9-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
+- "$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
 
 options:
   logging: CLOUD_LOGGING_ONLY
