@@ -8,9 +8,6 @@ steps:
   args: ['test']
 
 # Build the image
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE/SERVICE_NAME:$COMMIT_SHA', '.']
-
 - name: "gcr.io/cloud-builders/docker"
   args:
   - build
