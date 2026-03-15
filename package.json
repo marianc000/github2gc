@@ -6,7 +6,9 @@
   "scripts": {
     "startDoesNotWorkWithDocker": "node --watch --env-file=.env ./src/index.js",
     "start:prod": "node ./src/index.js",
-    "start": "nodemon --legacy-watch ./src/index.js"
+    "start": "cross-env PORT=5000 nodemon --legacy-watch ./src/index.js",
+    "test": "cross-env PORT=5000 node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "cross-env PORT=5000 jest --watchAll"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +17,13 @@
     "express": "^5.0.0-beta.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.21"
+    "cross-env": "^7.0.3",
+    "jest": "^29.3.0",
+    "nodemon": "^2.0.21",
+    "supertest": "^6.3.1"
   },
-  "type": "module"
+  "type": "module",
+  "jest": {
+    "transform": {}
+  } 
 }

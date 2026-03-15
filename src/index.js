@@ -10,13 +10,17 @@ const app = express();
 if (!process.env.PORT) {
     throw new Error("Please specify the port number for the HTTP server with the environment variable PORT.");
 }
- 
+
 const PORT = process.env.PORT;
- 
+
+app.get("/live", (req, res) => {
+    res.sendStatus(200);
+});
+
 app.get("/video", async (req, res) => { // Route for streaming video.
-    
+
     const videoPath = "./videos/SampleVideo_1280x720_1mb.mp4";
-    const stats = await  stat(videoPath);
+    const stats = await stat(videoPath);
 
     res.writeHead(200, {
         "Content-Length": stats.size,
@@ -26,9 +30,8 @@ app.get("/video", async (req, res) => { // Route for streaming video.
     createReadStream(videoPath).pipe(res);
 });
 
-//
-// Starts the HTTP server.
-//
-app.listen(PORT, () => {
-    console.log(`Microservice online:`+PORT);
+const server = app.listen(PORT, () => {
+    console.log(`Microservice online:` + PORT);
 });
+
+export { app, server };
