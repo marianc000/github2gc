@@ -20,8 +20,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', '$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA']
  
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: ['gcloud','run', 'services', 'add-iam-policy-binding', 'servicename', '--member="allUsers"', '--role="roles/run.invoker"']
+
 
 # Deploy image to Cloud Run REMOVE AUTHENTICATION
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -35,6 +34,9 @@ steps:
     - '$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA'
     - '--region'
     - '$LOCATION'
+
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args: ['gcloud','run', 'services', 'add-iam-policy-binding', 'servicename', '--member="allUsers"', '--role="roles/run.invoker"']
 
 images:
 - "$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
