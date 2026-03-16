@@ -34,10 +34,7 @@ steps:
     - '$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA'
     - '--region'
     - '$LOCATION'
-
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: ['gcloud','run', 'services', 'add-iam-policy-binding', 'servicename', '--member="allUsers"', '--role="roles/run.invoker"']
-
+ 
 images:
 - "$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
 
