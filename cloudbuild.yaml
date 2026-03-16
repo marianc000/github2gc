@@ -27,11 +27,11 @@ steps:
     - 'run'
     - 'deploy'
     - 'servicename'
+    - '--allow-unauthenticated'
     - '--image'
     - '$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA'
     - '--region'
     - '$LOCATION'
-    - '--allow-unauthenticated'
 
 images:
 - "$LOCATION-docker.pkg.dev/$PROJECT_ID/docker/myimage:$COMMIT_SHA"
