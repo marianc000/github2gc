@@ -22,7 +22,7 @@ steps:
  
 
 
-# Deploy image to Cloud Run REMOVE AUTHENTICATION
+# Deploy image to Cloud Run, to REMOVE AUTHENTICATION have to grant roles/run.admin to the service account https://docs.cloud.google.com/build/docs/deploy-containerized-application-cloud-run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
   args: 
@@ -40,4 +40,4 @@ images:
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
+  pubsubTopic: 'projects/addons-460311/subscriptions/for-cloud-build-sub'
